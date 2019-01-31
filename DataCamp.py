@@ -27,3 +27,31 @@ def parse_topics(soup, criteria=None):
                 for topic in soup.find_all(
                     class_='topic-block__content')]]
     ).set_index('topic').query(criteria)
+
+
+def parse_tracks(soup):
+    df = (pd.DataFrame(
+        columns=['track', 'description', 'badge_url'],
+        data=[((track
+                .find(class_='track-block__main')
+                .get_text()
+                .replace('\n', '')
+                .strip()),
+               (track
+                .find(class_='track-block__description')
+                .get_text()
+                .replace('\n', '')
+                .strip()),
+               (track
+                .img
+                .get('src')))
+              for track in soup.find_all(
+                  class_=['profile-tracks', 'track-block'])]))
+    return (df
+            .drop_duplicates()
+            .assign(
+                track_id=df.badge_url.str.split('\/').str.get(5),
+                cert_id=df.badge_url.str.split('?').str.get(-1),
+                badge_url=df.badge_url.str.split('?').str.get(0),
+                badge_filename=df.badge_url.str.split('\/').str.get(-1))
+            .set_index('track_id'))
