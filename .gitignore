@@ -102,3 +102,19 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+\.DS_Store
+
+\.idea/datacamp-profile\.iml
+
+\.idea/libraries/R_User_Library\.xml
+
+\.idea/misc\.xml
+
+\.idea/modules\.xml
+
+\.idea/other\.xml
+
+\.idea/vcs\.xml
+
+\.idea/workspace\.xml
