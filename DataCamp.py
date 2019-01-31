@@ -11,7 +11,7 @@ sns.set()
 
 def dl_profile(user):
     url = "https://www.datacamp.com/profile/" + user
-    page = urlopen(url)
+    page = requests.get(url)
     soup = BeautifulSoup(page, 'html.parser')
     return soup
 
